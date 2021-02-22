@@ -1,0 +1,47 @@
+Problema 1 
+
+entity Sumador is
+    port (
+        s, cout : out std_logic;
+        a, b, cin : in std_logic
+    );
+end Sumador;
+architecture sumador of comb 1 is
+begin
+    s <= a xor b xor cin;
+    cout <= (a and b) or (cin and (a or b) )
+end architecture;
+
+entity ADD_SUB is
+   port( AS: in std_logic;
+      	X,Y: in std_logic_vector(7 downto 0);
+      	C: out std_logic_vector(7 downto 0);
+      	Cout, OVERFLOW : out std_logic);
+end ADD_SUB;
+
+architecture struct of ADD_SUB is
+component Sumador is
+	port (s, cout : out std_logic;
+    	         a, b, cin : in std_logic);
+end component;
+
+signal C1, C2, C3, C4, C5, C6, C7, C8: std_logic;
+signal TMP: std_logic_vector(7 downto 0);
+
+begin
+TMP <= X xor Y;
+FA0:Sumador port map(R(0), C1, X(0),TMP(0),OP);
+FA1:Sumador port map(R(1), C2, X(1),TMP(1),C1);
+FA2:Sumador port map(R(2), C3, X(2),TMP(2),C2);
+FA3:Sumador port map(R(3), C4, X(3),TMP(3),C3);
+FA4:Sumador port map(R(4), C5, X(4),TMP(4),C3);
+FA5:Sumador port map(R(5), C6, X(5),TMP(5),C3);
+FA6:Sumador port map(R(6), C7, X(6),TMP(6),C3);
+FA7:Sumador port map(R(7), C8, X(7),TMP(7),C3);
+OVERFLOW <= C7 XOR C8 ;
+Cout <= C8;
+end struct;
+
+
+Problema 3 
+
